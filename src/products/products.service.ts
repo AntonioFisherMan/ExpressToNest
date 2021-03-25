@@ -15,7 +15,7 @@ export class ProductsService {
         return this.productModel.find().exec()
     }
 
-    //On Branch development
+    //On Branch developments
     async getById(id: string) {
         return this.productModel.findById(id)
     }

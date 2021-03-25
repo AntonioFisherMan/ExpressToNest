@@ -15,10 +15,7 @@ export class ProductsService {
         return this.productModel.find().exec()
     }
 
-    async getAlls(): Promise<Product[]> {
-        return this.productModel.find().exec()
-    }
-
+    //On Branch development
     async getById(id: string) {
         return this.productModel.findById(id)
     }

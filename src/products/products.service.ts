@@ -15,7 +15,6 @@ export class ProductsService {
         return this.productModel.find().exec()
     }
 
-
     async getById(id: string) {
         return this.productModel.findById(id)
     }

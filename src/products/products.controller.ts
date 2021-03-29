@@ -20,7 +20,11 @@ export class ProductsController {
         //ASDASDASDASd
         //ASDASDASDASd
         //ASDASDASDASd
+    }
 
+    @Post()
+    getAlls() {
+        return "Sdasd"
     }
 
     @Post()

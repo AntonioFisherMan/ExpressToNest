@@ -1,15 +1,16 @@
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import {Document} from 'mongoose';
+import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
-export type ProductDocument = Product & Document
 
-@Schema()
-export class Product {
-    @Prop()
-    title: string
+@Entity()
+export class Products {
+    @PrimaryGeneratedColumn()
+    id: number;
+    @Column({length: 10})
+    firstName: string;
 
-    @Prop()
-    price: number
+    @Column()
+    lastName: string;
+
+    @Column({default: true})
+    isActive: boolean;
 }
-
-export const ProductSchema = SchemaFactory.createForClass(Product)

@@ -1,29 +1,31 @@
-import {Body, Controller, Delete, Get, Header, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
 import {CreateProductDto} from "./dto/create-product.dto";
 import {ProductsService} from "./products.service";
-import {Product} from "./schemas/products.schema";
+import {Products} from "./schemas/products.schema";
 
 @Controller('products')
 export class ProductsController {
     constructor(private productService: ProductsService) {
     }
 
-    @Get()
+    @Get('/all')
     //@Redirect('https://google.com', 301)
     getAll() {
         return this.productService.getAll()
     }
 
     @Get(':id')
-    getProduct(@Param('id') id: string): Promise<Product> {
+    getProduct(@Param('id') id: string): Promise<Products> {
         return this.productService.getById(id)
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    @Header('Cache-Control', 'none')
-    createProduct(@Body() product: CreateProductDto) {
+    //@Header('Cache-Control', 'none')
+    async createProduct(@Body() product: CreateProductDto) {
+
         return this.productService.createProd(product)
+
     }
 
     @Delete(':id')

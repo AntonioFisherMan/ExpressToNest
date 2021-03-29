@@ -1,15 +1,28 @@
 import {Module} from '@nestjs/common';
-import {MongooseModule} from "@nestjs/mongoose";
+
 
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {ProductsModule} from "./products/products.module";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {Product} from "./products/schemas/products.schema";
+import {OrdersModule} from './orders/orders.module';
 
 
 @Module({
     imports: [
-        ProductsModule,
-        MongooseModule.forRoot('mongodb+srv://toxa_k_9:zxcv123580@cluster0.k5f2o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+        ProductsModule, OrdersModule,
+        TypeOrmModule.forRoot({
+            type: 'mysql',
+            host: 'localhost',
+            port: 8889,
+            username: 'root',
+            password: 'root',
+            database: 'shop',
+            entities: [Product],
+            synchronize: true,
+        }),
+        OrdersModule,
     ],
     controllers: [AppController],
     providers: [AppService],

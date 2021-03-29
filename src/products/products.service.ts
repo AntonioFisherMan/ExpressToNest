@@ -1,34 +1,39 @@
 import {Injectable} from "@nestjs/common";
 import {CreateProductDto} from "./dto/create-product.dto";
-import {Product, ProductDocument,} from "./schemas/products.schema";
-import {InjectModel} from "@nestjs/mongoose";
-import {Model} from "mongoose";
+import {Products} from "./schemas/products.schema";
+import {InjectRepository} from "@nestjs/typeorm";
+import {DeleteResult, Repository, UpdateResult} from "typeorm";
+
 
 @Injectable()
 export class ProductsService {
 
-    constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>) {
+    constructor(@InjectRepository(Products) private productRepository: Repository<Products>) {
 
     }
 
-    async getAll(): Promise<Product[]> {
-        return this.productModel.find().exec()
+    getAll(): Promise<Products[]> {
+        return this.productRepository.find()
     }
 
-    async getById(id: string) {
-        return this.productModel.findById(id)
+    getById(id: string): Promise<Products> {
+        return this.productRepository.findOne(id)
     }
 
-    createProd(product: CreateProductDto): Promise<Product> {
-        const newProduct = new this.productModel(product)
-        return newProduct.save()
+    createProd(product: CreateProductDto): Promise<Products> {
+        const newProduct = new Products();
+        newProduct.firstName = product.firstName
+        newProduct.lastName = product.lastName
+        newProduct.isActive = product.isActive
+        return this.productRepository.save(newProduct);
+
     }
 
-    async remove(id: string): Promise<Product> {
-        return this.productModel.findByIdAndRemove(id)
+    async remove(id: string): Promise<DeleteResult> {
+        return this.productRepository.delete(id);
     }
 
-    async update(id: string, product: CreateProductDto): Promise<Product> {
-        return this.productModel.findByIdAndUpdate(id, product)
+    async update(id: string, product: CreateProductDto): Promise<UpdateResult> {
+        return this.productRepository.update(id, product);
     }
 }

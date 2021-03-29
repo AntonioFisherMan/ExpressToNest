@@ -1,4 +1,9 @@
+import {IsString} from "class-validator";
+
+
 export class CreateProductDto {
-    readonly title: string
-    readonly price: number
+    @IsString()
+    readonly firstName: string
+    readonly lastName: string
+    readonly isActive: boolean
 }

@@ -18,6 +18,9 @@ export class ProductsController {
     getProduct(@Param('id') id: string): Promise<Products> {
         return this.productService.getById(id)
         //ASDASDASDASd
+        //ASDASDASDASd
+        //ASDASDASDASd
+
     }
 
     @Post()
